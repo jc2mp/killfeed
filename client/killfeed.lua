@@ -65,7 +65,12 @@ function Killfeed:CreateKillStrings()
             "%s couldn't withstand the power of EXPLOSIONS!",
             "%s was explosively fragmented!",
             "%s will have to be glued back together. IN HELL!"
-        }
+        },
+		[DamageEntity.Vehicle] = {
+			"%s forgot to put their seatbelt on!",
+			"%s got hit by a vehicle!",
+			"%s faked their driver's license!"
+		}
     }
 
     self.killer_msg = {
@@ -91,7 +96,12 @@ function Killfeed:CreateKillStrings()
             "%s was blown into a million pieces by %s!",
             "%s: now powered by explosions, courtesy of %s!",
             "%s's love of exploding was fed by %s!"
-        }
+        },
+		[DamageEntity.Vehicle] = {
+			"%s was run over by %s!",
+			"%s got caught in a roadrage by %s!",
+			"%s was killed in a carmageddon by %s!"
+		}
     }
 end
 

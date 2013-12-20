@@ -14,7 +14,7 @@ function Killfeed:PlayerDeath( args )
         args.killer:SetMoney( args.killer:GetMoney() + 100 )
     end
 
-    t.id = math.floor( math.random( 1, 3 ) + 0.5 )
+    t.id = math.random( 1, 3 )
 
     Network:Broadcast( "PlayerDeath", t )
 end
