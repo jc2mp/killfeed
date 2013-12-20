@@ -8,10 +8,8 @@ function Killfeed:PlayerDeath( args )
     t = {   ["player"]      = args.player,
             ["reason"]      = args.reason }
 
-    if args.killer and args.killer:GetName() ~= args.player:GetName() then
+    if args.killer and args.killer:GetSteamId() ~= args.player:GetSteamId() then
         t.killer            = args.killer
-
-        args.killer:SetMoney( args.killer:GetMoney() + 100 )
     end
 
     t.id = math.random( 1, 3 )
