@@ -132,7 +132,7 @@ function Killfeed:LocalPlayerChat( args )
 end
 
 function Killfeed:ModulesLoad()
-    Events:FireRegisteredEvent( "HelpAddItem",
+    Events:Fire( "HelpAddItem",
         {
             name = "Killfeed",
             text = 
@@ -143,7 +143,7 @@ function Killfeed:ModulesLoad()
 end
 
 function Killfeed:ModuleUnload()
-    Events:FireRegisteredEvent( "HelpRemoveItem",
+    Events:Fire( "HelpRemoveItem",
         {
             name = "Killfeed"
         } )
