@@ -19,9 +19,24 @@ end
 function Killfeed:PlayerDeath( args )
     if not IsValid( args.player ) then return end
 
-    if args.killer ~= nil then
+    -- With the addition of player:Damage(), custom reasons may be passed around.
+    -- We need to make sure we actually know how to handle them, otherwise we 
+    -- should to override it to None.
+    local reason = args.reason
+
+    if args.killer then
+        if not self.killer_msg[reason] then
+            reason = DamageEntity.None
+        end
+    else
+        if not self.no_killer_msg[reason] then
+            reason = DamageEntity.None
+        end
+    end
+
+    if args.killer then
         args.message = string.format( 
-            self.killer_msg[args.reason][args.id], 
+            self.killer_msg[reason][args.id], 
             args.player:GetName(), 
             args.killer:GetName() )
 
@@ -29,7 +44,7 @@ function Killfeed:PlayerDeath( args )
         args.killer_colour = args.killer:GetColor()
     else
         args.message = string.format( 
-            self.no_killer_msg[args.reason][args.id], 
+            self.no_killer_msg[reason][args.id], 
             args.player:GetName() )
     end
 
