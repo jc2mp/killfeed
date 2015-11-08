@@ -38,7 +38,7 @@ function Killfeed:PlayerDeath( args )
         args.message = string.format( 
             self.killer_msg[reason][args.id], 
             args.player:GetName(), 
-            args.killer:GetName() )
+            "     " .. args.killer:GetName() )
 
         args.killer_name   = args.killer:GetName()
         args.killer_colour = args.killer:GetColor()
@@ -81,11 +81,12 @@ function Killfeed:CreateKillStrings()
             "%s was explosively fragmented!",
             "%s will have to be glued back together. IN HELL!"
         },
-		[DamageEntity.Vehicle] = {
-			"%s forgot to put their seatbelt on!",
-			"%s got hit by a vehicle!",
-			"%s faked their driver's license!"
-		}
+
+        [DamageEntity.Vehicle] = {
+            "%s forgot to put their seatbelt on!",
+            "%s got hit by a vehicle!",
+            "%s faked their driver's license!"
+        }
     }
 
     self.killer_msg = {
@@ -112,11 +113,12 @@ function Killfeed:CreateKillStrings()
             "%s: now powered by explosions, courtesy of %s!",
             "%s's love of exploding was fed by %s!"
         },
-		[DamageEntity.Vehicle] = {
-			"%s was run over by %s!",
-			"%s got caught in a roadrage by %s!",
-			"%s was killed in a carmageddon by %s!"
-		}
+
+        [DamageEntity.Vehicle] = {
+            "%s was run over by %s!",
+            "%s got caught in a roadrage by %s!",
+            "%s was killed in a carmageddon by %s!"
+        }
     }
 end
 
@@ -194,6 +196,13 @@ function Killfeed:Render( args )
                 v.player_name, 
                 player_colour )
 
+            local img_width = text_height
+
+            if IsValid( v.player, false ) then
+                Render:FillArea( pos - Vector2( img_width + 2, 0 ), Vector2( img_width - 1, img_width - 1 ), shadow_colour )
+                v.player:GetAvatar():Draw( pos - Vector2( img_width + 3, 1 ), Vector2( img_width, img_width ), Vector2( 0, 0 ), Vector2( 1, 1 ) )
+            end
+
             if v.killer_name ~= nil then
                 local killer_colour = v.killer_colour
                 killer_colour.a = alpha
@@ -204,9 +213,15 @@ function Killfeed:Render( args )
                     center_hint + Vector2( -name_width, height_offset ), 
                     v.killer_name, 
                     killer_colour )
+
+                if IsValid( v.killer, false ) then
+                    pos = center_hint + Vector2( -name_width, height_offset )
+                    Render:FillArea( pos - Vector2( img_width + 2, 0 ), Vector2( img_width - 1, img_width - 1 ), shadow_colour )
+                    v.killer:GetAvatar():Draw( pos - Vector2( img_width + 3, 1 ), Vector2( img_width, img_width ), Vector2( 0, 0 ), Vector2( 1, 1 ) )
+                end
             end
 
-            height_offset = height_offset + text_height
+            height_offset = height_offset + text_height + 4
         else
             table.remove( self.list, i )
         end
